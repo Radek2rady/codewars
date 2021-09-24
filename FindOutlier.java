@@ -1,24 +1,39 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class FindOutlier {
 
   public static void main(String[] args) {
-  int[] a = new int[] {1,2,3};
-  int[] b = new int[] {2, 5};
-     System.out.println(arrayDiff(a, b ));
+    int[] in = new int[]{160, 3, 1719, 19, 11, 13, -21};
+    System.out.println(find(in));
   }
 
-  public static int[] arrayDiff(int[] a, int[] b) {
-    List<Integer> list = new ArrayList<>();
-    loop:
-    for (int num : a) {
-      for (int i : b) if (num == i) continue loop;
-      list.add(num);
+  static int find(int[] integers) {
+    List odd = new ArrayList();
+    ArrayList even = new ArrayList();
+    int oddNr = Integer.MIN_VALUE;
+    int evenNr = Integer.MIN_VALUE;
+    for (int i = 0; i < integers.length; i++) {
+      if (integers[i] % 2 == 0) {
+        even.add(integers[i]);
+        evenNr = integers[i];
+
+      } else {
+        odd.add(integers[i]);
+        oddNr = integers[i];
+      }
     }
-
-    return list.stream().mapToInt(Integer::intValue).toArray();
+    if (even.size() > odd.size()) {
+      return oddNr;
+    } else {
+      return evenNr;
+    }
   }
 
+  //zajimave reseni
+//  int sum = Arrays.stream(integers).limit(3).map(i -> Math.abs(i) % 2).sum();
+//  int mod = (sum == 0 || sum == 1) ? 1 : 0;
+//
+//        return Arrays.stream(integers).parallel() // call parallel to get as much bang for the buck on a "large" array
+//                .filter(n -> Math.abs(n) % 2 == mod).findFirst().getAsInt();
 }
